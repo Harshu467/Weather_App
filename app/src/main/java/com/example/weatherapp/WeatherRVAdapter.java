@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,11 +19,11 @@ import java.util.Date;
 
 public class WeatherRVAdapter extends RecyclerView.Adapter<WeatherRVAdapter.ViewHolder> {
     private Context context;
-    private ArrayList<WeatherRVAdapter> weatherRVAdapterArrayList;
+    private ArrayList<WeatherRVModal> weatherRVModalArrayList ;
 
-    public WeatherRVAdapter(Context context, ArrayList<WeatherRVAdapter> weatherRVAdapterArrayList) {
+    public WeatherRVAdapter(Context context, ArrayList<WeatherRVModal> weatherRVModalArrayList){
         this.context = context;
-        this.weatherRVAdapterArrayList = weatherRVAdapterArrayList;
+        this.weatherRVModalArrayList = weatherRVModalArrayList;
     }
 
     @NonNull
@@ -30,9 +32,11 @@ public class WeatherRVAdapter extends RecyclerView.Adapter<WeatherRVAdapter.View
         View view = LayoutInflater.from(context).inflate(R.layout.weather_rv_item,parent,false);
         return new ViewHolder(view);
 
+
+}
     @Override
-    public void onBindViewHolder(@NonNull WeatherRVAdapter.ViewHolder holder, int position) {
-        WeatherRVModal modal = weatherRVAdapterArrayList.get(position);
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        WeatherRVModal modal = weatherRVModalArrayList.get(position);
         holder.temperatureTV.setText(modal.getTemperature()+"°C");
         Picasso.get().load("http:".concat(modal.getIcon())).into(holder.ConditionIV);
         holder.windTV.setText(modal.getWindSpeed()+"km/h");
@@ -49,11 +53,10 @@ public class WeatherRVAdapter extends RecyclerView.Adapter<WeatherRVAdapter.View
 
     @Override
     public int getItemCount() {
-
-        return weatherRVAdapterArrayList.size();
+        return weatherRVModalArrayList.size() ;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder  {
         private TextView windTV,temperatureTV,timeTV;
         private ImageView ConditionIV;
         public ViewHolder(@NonNull View itemView) {
@@ -62,6 +65,7 @@ public class WeatherRVAdapter extends RecyclerView.Adapter<WeatherRVAdapter.View
             temperatureTV = itemView.findViewById(R.id.idTVTemperature);
             timeTV = itemView.findViewById(R.id.idTVTime);
             ConditionIV = itemView.findViewById(R.id.idIVCondition);
-        }
+    }
     }
 }
+
